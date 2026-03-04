@@ -2,13 +2,19 @@ import 'package:chatapp/components/my_button.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/components/my_text_field.dart';
 
-class LoginPage extends StatelessWidget {
+
+class RegisterPage extends StatelessWidget {
+
+  final void Function()? onTap;
+
+  void register() {}
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwController = TextEditingController();
+  final TextEditingController _confirmPwController = TextEditingController();
 
 
-  LoginPage({super.key});
+  RegisterPage({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +31,7 @@ class LoginPage extends StatelessWidget {
 
             //login or sign up text
             Text(
-              'Welcome!',
+              "Let's create an account for you!",
               style: TextStyle(
                   color: Theme
                       .of(context)
@@ -41,12 +47,33 @@ class LoginPage extends StatelessWidget {
               controller: _emailController,),
 
             // password placeholder
-            MyTextField(
-              hint1: 'Password', obscureText: true, controller: _pwController,),
+            MyTextField(hint1: 'Password', obscureText: true, controller: _pwController,),
+
+            MyTextField(hint1: 'Confirm Password', obscureText: true, controller: _confirmPwController,),
+
+            const SizedBox(height: 10),
+
 
             //sign up/in button
-            MyButton(text: 'Sign in'),
+            MyButton(text: 'Register', onTap: register,),
 
+            const SizedBox(height: 24),
+            // Already have an account? Sign in
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Already have an account? ", style: TextStyle(color: Theme.of(context).colorScheme.primary),),
+                GestureDetector(
+                  onTap: onTap,
+                  child: Text(
+                    "Sign in",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),
