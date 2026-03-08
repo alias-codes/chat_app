@@ -1,3 +1,4 @@
+import 'package:chatapp/auth/auth_service.dart';
 import 'package:chatapp/components/my_button.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/components/my_text_field.dart';
@@ -7,8 +8,26 @@ class LoginPage extends StatelessWidget {
   final void Function()? onTap ;
 
   // login method
-  void login() {
+  void login(BuildContext context) async{
+    // auth service
+    final authService = AuthService();
 
+    //try login
+    try {
+      await authService.signInWithEmailPassword(_emailController.text, _pwController.text,);
+    }
+
+    // catch any errors
+    catch (e) {
+      debugPrint("LOGIN ERROR: $e");
+
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(e.toString()),
+        ),
+      );
+    }
   }
 
 
@@ -33,7 +52,7 @@ class LoginPage extends StatelessWidget {
 
             //login or sign up text
             Text(
-              'Welcome!',
+              'Welcome back!',
               style: TextStyle(
                   color: Theme
                       .of(context)
@@ -54,7 +73,7 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 10),
 
             //sign up/in button
-              MyButton(text: 'Sign in', onTap: login,),
+              MyButton(text: 'Sign in', onTap: () => login(context),),
 
             const SizedBox(height: 24),
             // not a member? Register now

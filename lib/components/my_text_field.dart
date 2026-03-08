@@ -18,6 +18,8 @@ class _MyTextFieldState extends State<MyTextField> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
       child: TextField(
+        controller: widget.controller,
+        obscureText: widget.obscureText,
         decoration: InputDecoration(
           filled: true,
           fillColor: Theme.of(context).colorScheme.secondary,
