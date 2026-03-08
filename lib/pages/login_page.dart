@@ -1,39 +1,37 @@
-import 'package:chatapp/auth/auth_service.dart';
 import 'package:chatapp/components/my_button.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/components/my_text_field.dart';
 
-class LoginPage extends StatelessWidget {
+import '../services/auth/auth_service.dart';
 
-  final void Function()? onTap ;
+class LoginPage extends StatelessWidget {
+  final void Function()? onTap;
 
   // login method
-  void login(BuildContext context) async{
+  void login(BuildContext context) async {
     // auth service
     final authService = AuthService();
 
     //try login
     try {
-      await authService.signInWithEmailPassword(_emailController.text, _pwController.text,);
+      await authService.signInWithEmailPassword(
+        _emailController.text,
+        _pwController.text,
+      );
     }
-
     // catch any errors
     catch (e) {
       debugPrint("LOGIN ERROR: $e");
 
       showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          title: Text(e.toString()),
-        ),
+        builder: (context) => AlertDialog(title: Text(e.toString())),
       );
     }
   }
 
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwController = TextEditingController();
-
 
   LoginPage({super.key, required this.onTap});
 
@@ -45,54 +43,63 @@ class LoginPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //logo
-            Icon(Icons.message, size: 60, color: Theme
-                .of(context)
-                .colorScheme
-                .primary,),
+            Icon(
+              Icons.message,
+              size: 60,
+              color: Theme.of(context).colorScheme.primary,
+            ),
 
             //login or sign up text
             Text(
               'Welcome back!',
               style: TextStyle(
-                  color: Theme
-                      .of(context)
-                      .colorScheme
-                      .primary,
-                  fontSize: 20
+                color: Theme.of(context).colorScheme.primary,
+                fontSize: 20,
               ),
             ),
 
             //email placeholder
-            MyTextField(hint1: 'Email',
+            MyTextField(
+              hint1: 'Email',
               obscureText: false,
-              controller: _emailController,),
+              controller: _emailController,
+            ),
 
             // password placeholder
-            MyTextField(hint1: 'Password', obscureText: true, controller: _pwController,),
+            MyTextField(
+              hint1: 'Password',
+              obscureText: true,
+              controller: _pwController,
+            ),
 
             const SizedBox(height: 10),
 
             //sign up/in button
-              MyButton(text: 'Sign in', onTap: () => login(context),),
+            MyButton(text: 'Sign in', onTap: () => login(context)),
 
             const SizedBox(height: 24),
             // not a member? Register now
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Not a member? ", style: TextStyle(color: Theme.of(context).colorScheme.primary),),
+                Text(
+                  "Not a member? ",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
                 GestureDetector(
                   onTap: onTap,
                   child: Text(
                     "Register now",
                     style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
-                )
+                ),
               ],
-            )
-
+            ),
           ],
         ),
       ),
